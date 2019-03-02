@@ -487,20 +487,19 @@ PrefabInstance:
     - target: {fileID: 3038199947815791485, guid: f0f3a6332f2a69e49ab0d6c8fff8e066,
         type: 3}
       propertyPath: gameObjects.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3038199947815791485, guid: f0f3a6332f2a69e49ab0d6c8fff8e066,
         type: 3}
       propertyPath: gameObjects.Array.data[0]
       value: 
-      objectReference: {fileID: 3352522545108854911, guid: 2ff00866ec1c8284581f3ab6938c9360,
+      objectReference: {fileID: 557626755011933403, guid: 2d0d238947f2fc3b8af05363c7edbdc8,
         type: 3}
     - target: {fileID: 3038199947815791485, guid: f0f3a6332f2a69e49ab0d6c8fff8e066,
         type: 3}
       propertyPath: gameObjects.Array.data[1]
       value: 
-      objectReference: {fileID: 5445083619713269595, guid: afc4eabf5b345f840aae9560fd911027,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 3038199946366796073, guid: f0f3a6332f2a69e49ab0d6c8fff8e066,
         type: 3}
       propertyPath: m_LocalPosition.z
