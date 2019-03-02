@@ -37,7 +37,7 @@ public class PlayerCharacter : MonoBehaviour
             Vector3 position = transform.position;
             Instantiate(candle, position, Quaternion.identity);
             Instantiate(candleLight, position, Quaternion.identity)
-                .transform.Translate(0, 1, -0.5f);
+                .transform.Translate(0, 1, -3);
         }
         
 
