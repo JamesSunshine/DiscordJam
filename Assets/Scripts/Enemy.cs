@@ -8,22 +8,21 @@ public class Enemy : MonoBehaviour
 {
     public float speed = 6.0f;
 
-    private Rigidbody rb;
+
 
     // Start is called before the first frame update
     void Start() {
-
-        rb = GetComponent<RigidBody>();
-
+        rb = GetComponent<RigidBody2D>();
     }
 
     // Update is called once per frame
     void Update() {
-        float moveHorizonal = Input.GetAxis("Horizonal");
-        float moveVertical = Input.GetAxis("Vertical");
+        //float moveHorizonal = Input.GetAxis("Horizonal");
+        //float moveVertical = Input.GetAxis("Vertical");
+    }
 
-        Vector3 movement = new Vector3 (moveHorizonal, 0.0f, moveVertical);
 
-        rb.AddForce(movement * speed);
+    public Vector2 getPosition() {
+        return Vector2(this.transform.position[0], this.transform.position[1]);
     }
 }
