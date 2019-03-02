@@ -19,17 +19,26 @@ public class Enemy : MonoBehaviour
 
         direction = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
         rb.AddForce(direction * speed);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        Candle closestCandle = new Candle();
+        Vector2 closestCandlePos = new Vector2(0.0f, 0.0f);
 
-        if (Vector2.Angle(direction, closestCandle.position) > 36) {
-            // pitch up
+        float angleToCandle = Vector2.Angle(direction, closestCandlePos);
+        
+        
+        Vector2 turnForce = Vector2.Perpendicular(rb.velocity) / rb.mass;
+
+        if (angleToCandle > 36) {
+            rb.AddTorque(0.2f);
         }
-        
-        
+
+        if (angleToCandle < 34)
+        {
+            rb.AddTorque(-0.2f);
+        }
     }
 }
