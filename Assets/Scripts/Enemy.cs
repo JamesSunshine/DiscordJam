@@ -7,6 +7,7 @@ using Vector2 = UnityEngine.Vector2;
 public class Enemy : MonoBehaviour
 {
     public float speed = 6.0f;
+    public Vector2 position => transform.position;
 
 
     private Rigidbody2D rb;
@@ -31,6 +32,4 @@ public class Enemy : MonoBehaviour
         
         
     }
-
-//    public Vector2 position => (Vector2) transform.position;
 }
