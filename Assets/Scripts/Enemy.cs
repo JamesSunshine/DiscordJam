@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
-
+using Vector2 = UnityEngine.Vector2;
 
 
 public class Enemy : MonoBehaviour
@@ -21,8 +22,5 @@ public class Enemy : MonoBehaviour
         //float moveVertical = Input.GetAxis("Vertical");
     }
 
-
-    //public Vector2 getPosition() {
-        //return Vector2(this.transform.position[0], this.transform.position[1]);
-    //}
+//    public Vector2 position => (Vector2) transform.position;
 }
