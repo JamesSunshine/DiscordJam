@@ -7,26 +7,31 @@ public class PlayerCharacter : MonoBehaviour
     public float speed = 0;
     public float health = 0;
     public float money = 0;
+    float diagonal = 0.7f;
     // Start is called before the first frame update
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.W))
+        Vector2 velocity = Vector2.zero;
+
+        if (Input.GetKey(KeyCode.W))
         {
-            transform.Translate(Vector2.up * speed * Time.deltaTime);
+            velocity += Vector2.up;
         }
-        else if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKey(KeyCode.S))
         {
-            transform.Translate(Vector2.left * speed * Time.deltaTime);
+            velocity += Vector2.down;
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKey(KeyCode.A))
         {
-            transform.Translate(Vector2.down * speed * Time.deltaTime);
+            velocity += Vector2.left;
         }
-        else if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKey(KeyCode.D))
         {
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
+            velocity += Vector2.right;
         }
+
+        transform.Translate(velocity.normalized * speed * Time.deltaTime);
     }
 }
