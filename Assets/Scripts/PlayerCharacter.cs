@@ -7,7 +7,6 @@ public class PlayerCharacter : MonoBehaviour
     public float speed = 0;
     public float health = 0;
     public float money = 0;
-    float diagonal = 0.7f;
     // Start is called before the first frame update
 
     // Update is called once per frame
