@@ -7,6 +7,9 @@ public class PlayerCharacter : MonoBehaviour
     public float speed = 0;
     public float health = 0;
     public float money = 0;
+    public GameObject[] gameObjects;
+    private GameObject candle => gameObjects[0];
+    private GameObject candleLight => gameObjects[1];
     // Start is called before the first frame update
 
     // Update is called once per frame
@@ -30,6 +33,13 @@ public class PlayerCharacter : MonoBehaviour
         {
             velocity += Vector2.right;
         }
+        if (Input.GetKeyDown(KeyCode.E)) {
+            Vector3 position = transform.position;
+            Instantiate(candle, position, Quaternion.identity);
+            Instantiate(candleLight, position, Quaternion.identity)
+                .transform.Translate(0, 1, -0.5f);
+        }
+        
 
         transform.Translate(velocity.normalized * speed * Time.deltaTime);
     }

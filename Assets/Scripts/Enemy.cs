@@ -8,6 +8,7 @@ using Vector2 = UnityEngine.Vector2;
 public class Enemy : MonoBehaviour
 {
     public float speed = 6.0f;
+    public Vector2 position => transform.position;
 
 
 
@@ -21,6 +22,4 @@ public class Enemy : MonoBehaviour
         //float moveHorizonal = Input.GetAxis("Horizonal");
         //float moveVertical = Input.GetAxis("Vertical");
     }
-
-//    public Vector2 position => (Vector2) transform.position;
 }

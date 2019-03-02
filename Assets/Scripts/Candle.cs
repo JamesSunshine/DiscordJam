@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 using UnityEngine;
 using Utility;
 
@@ -6,7 +7,7 @@ public class Candle : UnityEngine.MonoBehaviour {
     public double range;
     public int damage;
     public int attackSpeed;
-    public Vector2 position;
+    public Vector2 position => transform.position;
     public int health;
     public Brightness brightness;
     
@@ -27,20 +28,19 @@ public class Candle : UnityEngine.MonoBehaviour {
         }
     }
     
-//    Vector2 GetClosestEnemy(Enemy[] enemies) {
-//        enemies[0].
-//        Vector2 bestTarget;
-//        float closestDistanceSqr = Mathf.Infinity;
-//        Vector2 currentPosition = transform.position;
-//        foreach (Vector2 potentialTarget in enemies) {
-//            Vector3 directionToTarget = potentialTarget.position - currentPosition;
-//            float dSqrToTarget = directionToTarget.sqrMagnitude;
-//            if (dSqrToTarget < closestDistanceSqr) {
-//                closestDistanceSqr = dSqrToTarget;
-//                bestTarget = potentialTarget;
-//            }
-//        }
-//     
-//        return bestTarget;
-//    }
+    Enemy GetClosestEnemy(Enemy[] enemies) {
+        Enemy closestEnemy = null;
+        float closestDistanceSqr = Mathf.Infinity;
+        Vector2 currentPosition = position;
+        foreach (Enemy enemy in enemies) {
+            Vector2 directionToTarget = enemy.position - currentPosition;
+            float dSqrToTarget = directionToTarget.sqrMagnitude;
+            if (dSqrToTarget < closestDistanceSqr) {
+                closestDistanceSqr = dSqrToTarget;
+                closestEnemy = enemy;
+            }
+        }
+     
+        return closestEnemy;
+    }
 }

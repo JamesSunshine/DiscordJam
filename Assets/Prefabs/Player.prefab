@@ -95,3 +95,5 @@ MonoBehaviour:
   speed: 3
   health: 0
   money: 0
+  candles:
+  - {fileID: 6553236355202589670, guid: a6b95cc053ddadc409b7bb7a53275095, type: 3}
