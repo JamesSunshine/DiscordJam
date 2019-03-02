@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        rb = GetComponent<RigidBody2D>();
+        //rb = GetComponent<RigidBody2D>();
     }
 
     // Update is called once per frame
@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    public Vector2 getPosition() {
-        return Vector2(this.transform.position[0], this.transform.position[1]);
-    }
+    //public Vector2 getPosition() {
+        //return Vector2(this.transform.position[0], this.transform.position[1]);
+    //}
 }
