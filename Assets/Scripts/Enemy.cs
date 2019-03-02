@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
 
         direction = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
-        rb.AddForce(initialDirection * speed);
+        rb.AddForce(direction * speed);
     }
 
     // Update is called once per frame

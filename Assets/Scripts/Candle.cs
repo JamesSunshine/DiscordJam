@@ -7,10 +7,15 @@ public class Candle : UnityEngine.MonoBehaviour {
     public double range;
     public int damage;
     public int attackSpeed;
-    public Vector2 position => transform.position;
+    
+    //public Vector2 position => transform.position;
     public int health;
     public Brightness brightness;
-    
+
+    public Vector2 position {
+        get { return transform.position; }
+        
+    }
     // Start is called before the first frame update
     void Start() {
         
@@ -31,7 +36,7 @@ public class Candle : UnityEngine.MonoBehaviour {
     Enemy GetClosestEnemy(Enemy[] enemies) {
         Enemy closestEnemy = null;
         float closestDistanceSqr = Mathf.Infinity;
-        Vector2 currentPosition = position;
+        Vector2 currentPosition = transform.position;
         foreach (Enemy enemy in enemies) {
             Vector2 directionToTarget = enemy.position - currentPosition;
             float dSqrToTarget = directionToTarget.sqrMagnitude;

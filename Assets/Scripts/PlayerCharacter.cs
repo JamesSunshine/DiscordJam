@@ -36,8 +36,6 @@ public class PlayerCharacter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) {
             Vector3 position = transform.position;
             Instantiate(candle, position, Quaternion.identity);
-            Instantiate(candleLight, position, Quaternion.identity)
-                .transform.Translate(0, 1, -3);
         }
         
 
