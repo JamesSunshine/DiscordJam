@@ -71,6 +71,10 @@ public class Enemy : MonoBehaviour {
 		return new Vector2(pos.x, pos.y);
 	}
 
+	public Vector2 GetFuturePosition() {
+		return position + speed * 0.01f * direction;
+	}
+
 	Vector2 FlightCorrectionForce(Vector2 target) {
 		Vector2 turnForce = Vector2.Perpendicular(rb.velocity) / rb.mass;
 		float angleToTarget = Vector2.Angle(rb.velocity, target - getPosition());
