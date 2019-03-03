@@ -6,8 +6,7 @@ using UnityEngine.Experimental.PlayerLoop;
 using Vector2 = UnityEngine.Vector2;
 
 
-public class Enemy : MonoBehaviour
-{
+public class Enemy : MonoBehaviour {
     public float speed = 6.0f;
     public Vector2 position => transform.position;
 
