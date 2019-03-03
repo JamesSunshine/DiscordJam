@@ -33,12 +33,18 @@ public class PlayerCharacter : MonoBehaviour
         {
             velocity += Vector2.right;
         }
-        if (Input.GetKeyDown(KeyCode.E)) {
-            Vector3 position = transform.position;
-            Instantiate(candle, position, Quaternion.identity);
-        }
+        
         
 
         transform.Translate(velocity.normalized * speed * Time.deltaTime);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Vector3 position = transform.position;
+            Instantiate(candle, position, Quaternion.identity);
+        }
     }
 }
