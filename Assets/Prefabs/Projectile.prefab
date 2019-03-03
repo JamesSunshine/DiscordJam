@@ -276,3 +276,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.2
+  DeadMoth: {fileID: 1981192814289017310, guid: fb9b50ea483788c429e33024671fea6e,
+    type: 3}

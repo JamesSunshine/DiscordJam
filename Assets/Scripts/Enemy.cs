@@ -29,7 +29,14 @@ public class Enemy : MonoBehaviour {
     void FixedUpdate() {
         UpdateFlightPitch();
     }
-
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "projectile")
+        {
+            Destroy(collision.gameObject);
+            Destroy(this.gameObject);
+        }
+    }
     void UpdateFlightPitch()
     {
         Vector2 correctionForce = FlightCorrectionForce(player.transform.position);
