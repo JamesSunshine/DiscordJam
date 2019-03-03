@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Experimental.PlayerLoop;
 using Vector2 = UnityEngine.Vector2;
 
@@ -22,21 +23,14 @@ public class Enemy : MonoBehaviour {
         direction = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
         rb.AddForce(direction * speed);
 
-        player = GameObject.Find("Player");
+        player = GameObject.Find("Gem");
     }
 
     // Update is called once per frame
     void FixedUpdate() {
         UpdateFlightPitch();
     }
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "projectile")
-        {
-            Destroy(collision.gameObject);
-            Destroy(this.gameObject);
-        }
-    }
+
     void UpdateFlightPitch()
     {
         Vector2 correctionForce = FlightCorrectionForce(player.transform.position);
@@ -66,4 +60,6 @@ public class Enemy : MonoBehaviour {
         }
         return Vector2.zero;
     }
+
+
 }
