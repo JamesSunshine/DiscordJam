@@ -1,15 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Experimental.PlayerLoop;
 using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 
 public class Enemy : MonoBehaviour
 {
     public float speed = 6.0f;
+    public float chanceDiveBomb;
     public Vector2 position => transform.position;
 
 
@@ -35,31 +38,35 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
+
+        Vector2 correctionForce;
         
         if (flightMode == FlightMode.Circle)
         {
+            float dt = 1f / 30f;
             
             // Chance to switch to divebomb mode
-            if (Random.Range(0.0f, 1.0f) < 0.05)
+            if (Random.Range(0.0f, 1.0f) < chanceDiveBomb * dt)
             {
                 flightMode = FlightMode.DiveBomb;
             }
             
-            UpdateFlightPitch();
+            correctionForce = CircleFlightCorrectionForce(player.transform.position);
         }
         else
         {
-            UpdateFlightPitch();
-            //UpdateDiveBombPitch();
+            correctionForce = DiveBombCorrectionForce(player.transform.position);
         }
-    }
-
-
-    void UpdateDiveBombPitch()
-    {
         
+        rb.AddForce(correctionForce);
+        
+        // Cap speed
+        rb.velocity = rb.velocity.normalized * speed;
     }
+
+
     
     void OnCollisionEnter(Collision collision)
     {
@@ -70,14 +77,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void UpdateFlightPitch()
-    {
-        Vector2 correctionForce = FlightCorrectionForce(player.transform.position);
-        rb.AddForce(correctionForce);
-
-        rb.velocity = rb.velocity.normalized * speed;
-    }
-
     Vector2 getPosition()
     {
         Vector3 pos = transform.position;
@@ -85,17 +84,35 @@ public class Enemy : MonoBehaviour
     }
 
 
-    Vector2 FlightCorrectionForce(Vector2 target) {
+    Vector2 CircleFlightCorrectionForce(Vector2 target) {
         Vector2 turnForce = Vector2.Perpendicular(rb.velocity) / rb.mass;
         float angleToTarget = Vector2.Angle(rb.velocity, target - getPosition());
         
         if (angleToTarget > 180) {
-            if (angleToTarget > (180 - 37))
+            if (angleToTarget > (360 - 37))
             {
                 return turnForce * -1;
             }
         }
         else if (angleToTarget > 37)
+        {
+            return turnForce;
+        }
+        return Vector2.zero;
+    }
+
+    Vector2 DiveBombCorrectionForce(Vector2 target)
+    {
+        Vector2 turnForce = (target - getPosition()) * 5;
+        float angleToTarget = Vector2.Angle(rb.velocity, target - getPosition());
+
+        if (angleToTarget > 180)
+        {
+            if (angleToTarget > 359)
+            {
+                return turnForce * -1;
+            }
+        } else if (angleToTarget > 1)
         {
             return turnForce;
         }
