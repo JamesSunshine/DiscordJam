@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
         rb.AddForce(direction * speed);
 
         flightMode = FlightMode.Circle;
-        player = GameObject.Find("Gem");
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
@@ -52,18 +52,22 @@ public class Enemy : MonoBehaviour
             {
                 flightMode = FlightMode.DiveBomb;
             }
-            
-            correctionForce = CircleFlightCorrectionForce(player.transform.position);
+
+            correctionForce = RelativePitchToTarget(player.transform.position, 37f);
         }
         else
         {
-            correctionForce = DiveBombCorrectionForce(player.transform.position);
+            correctionForce = RelativePitchToTarget(player.transform.position, 0f);
         }
         
         rb.AddForce(correctionForce);
         
         // Cap speed
         rb.velocity = rb.velocity.normalized * speed;
+        
+        // Set direction
+        
+        //transform.LookAt(getPosition() + rb.velocity * 0.1f);
     }
 
 
@@ -83,22 +87,27 @@ public class Enemy : MonoBehaviour
         return new Vector2(pos.x, pos.y);
     }
 
+    Vector2 CircleFlightCorrectionForce(Vector2 target)
+    {
 
-    Vector2 CircleFlightCorrectionForce(Vector2 target) {
-        Vector2 turnForce = Vector2.Perpendicular(rb.velocity) / rb.mass;
-        float angleToTarget = Vector2.Angle(rb.velocity, target - getPosition());
-        
-        if (angleToTarget > 180) {
-            if (angleToTarget > (360 - 37))
-            {
-                return turnForce * -1;
-            }
-        }
-        else if (angleToTarget > 37)
-        {
-            return turnForce;
-        }
-        return Vector2.zero;
+
+        return RelativePitchToTarget(target, 37f);
+//        
+//        Vector2 turnForce = Vector2.Perpendicular(rb.velocity) / rb.mass;
+//        
+//        float angleToTarget = Vector2.Angle(rb.velocity, target - getPosition());
+//        
+//        if (angleToTarget > 180) {
+//            if (angleToTarget > (360 - 37))
+//            {
+//                return turnForce * -1;
+//            }
+//        }
+//        else if (angleToTarget > 37)
+//        {
+//            return turnForce;
+//        }
+//        return Vector2.zero;
     }
 
     Vector2 DiveBombCorrectionForce(Vector2 target)
@@ -117,6 +126,29 @@ public class Enemy : MonoBehaviour
             return turnForce;
         }
         return Vector2.zero;
+    }
+
+    Vector2 RelativePitchToTarget(Vector2 target, float pitchDegrees, float deadRange = 5)
+    {
+        Vector2 turnForce = Vector2.Perpendicular(rb.velocity) / rb.mass;
+        float angleToTarget = Vector2.Angle(rb.velocity, target - getPosition());
+
+        float direction = 1;
+
+        if (angleToTarget > 180)
+        {
+            angleToTarget = 360 - angleToTarget;
+            direction = -1;
+        }
+
+        if (pitchDegrees - deadRange < angleToTarget || angleToTarget < pitchDegrees + deadRange)
+        {
+            return turnForce * direction;
+        }
+        else
+        {
+            return Vector2.zero;
+        }
     }
 }
 
