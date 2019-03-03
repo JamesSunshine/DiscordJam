@@ -72,7 +72,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public Vector2 GetFuturePosition() {
-		return position + speed * 0.001f * direction;
+		return position + speed * 0.01f * direction;
 	}
 
 	Vector2 FlightCorrectionForce(Vector2 target) {

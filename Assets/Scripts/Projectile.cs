@@ -18,9 +18,9 @@ public class Projectile : MonoBehaviour {
 	private void OnTriggerEnter2D(Collider2D other) {
 		if (!other.CompareTag("enemy")) return;
 
-//		Destroy(other.gameObject);
+		Destroy(other.gameObject);
 		Destroy(this.gameObject);
-//		Instantiate(DeadMoth, position, Quaternion.identity);
+		Instantiate(DeadMoth, position, Quaternion.identity);
 	}
 
 	// Update is called once per frame
