@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour {
 		rb.AddForce(direction * speed);
 
 		flightMode = FlightMode.Circle;
-		player = GameObject.Find("Gem");
+		player = GameObject.Find("Candle");
 	}
 
 	// Update is called once per frame
@@ -69,10 +69,6 @@ public class Enemy : MonoBehaviour {
 	Vector2 getPosition() {
 		Vector3 pos = transform.position;
 		return new Vector2(pos.x, pos.y);
-	}
-
-	public Vector2 GetFuturePosition() {
-		return position + speed / 0.0001f * direction;
 	}
 
 	Vector2 FlightCorrectionForce(Vector2 target) {
