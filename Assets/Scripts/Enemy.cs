@@ -6,7 +6,8 @@ using UnityEngine.Experimental.PlayerLoop;
 using Vector2 = UnityEngine.Vector2;
 
 
-public class Enemy : MonoBehaviour {
+public class Enemy : MonoBehaviour
+{
     public float speed = 6.0f;
     public Vector2 position => transform.position;
 
@@ -14,6 +15,12 @@ public class Enemy : MonoBehaviour {
     private Rigidbody2D rb;
     private Vector2 direction;
     private GameObject player;
+
+    private enum FlightMode {
+        Circle, DiveBomb
+    };
+
+    private FlightMode flightMode;
 
     // Start is called before the first frame update
     void Start() {
@@ -23,12 +30,36 @@ public class Enemy : MonoBehaviour {
         rb.AddForce(direction * speed);
 
         player = GameObject.Find("Player");
+        flightMode = FlightMode.Circle;
     }
 
     // Update is called once per frame
     void FixedUpdate() {
-        UpdateFlightPitch();
+        
+        if (flightMode == FlightMode.Circle)
+        {
+            
+            // Chance to switch to divebomb mode
+            if (Random.Range(0.0f, 1.0f) < 0.05)
+            {
+                flightMode = FlightMode.DiveBomb;
+            }
+            
+            UpdateFlightPitch();
+        }
+        else
+        {
+            UpdateFlightPitch();
+            //UpdateDiveBombPitch();
+        }
     }
+
+
+    void UpdateDiveBombPitch()
+    {
+        
+    }
+    
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "projectile")
