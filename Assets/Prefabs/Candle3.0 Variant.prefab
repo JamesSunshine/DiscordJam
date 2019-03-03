@@ -184,6 +184,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Candle3.0 Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6917139465605330680, guid: 2ff00866ec1c8284581f3ab6938c9360,
+        type: 3}
+      propertyPath: attackSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6917139465605330680, guid: 2ff00866ec1c8284581f3ab6938c9360,
+        type: 3}
+      propertyPath: attacksPerSecond
+      value: 1.9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ff00866ec1c8284581f3ab6938c9360, type: 3}
 --- !u!1 &557626755011933403 stripped
