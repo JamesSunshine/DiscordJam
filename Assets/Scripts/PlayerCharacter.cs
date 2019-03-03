@@ -13,7 +13,7 @@ public class PlayerCharacter : MonoBehaviour
     // Start is called before the first frame update
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Vector2 velocity = Vector2.zero;
 
