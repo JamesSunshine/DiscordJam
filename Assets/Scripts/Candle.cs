@@ -4,7 +4,7 @@ using UnityEngine;
 using Utility;
 
 public class Candle : UnityEngine.MonoBehaviour {
-	public double range;
+	public float range;
 	public int damage;
 	public float attacksPerSecond;
 	public int health;
@@ -15,10 +15,12 @@ public class Candle : UnityEngine.MonoBehaviour {
 
 	private long _lastAttackTime = 0;
 	private Enemy _enemy;
+	private float _rangeSqr;
 
 	// Start is called before the first frame update
 	void Start() {
 		_enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
+		_rangeSqr = range * range;
 	}
 
 	// Update is called once per frame
@@ -27,8 +29,10 @@ public class Candle : UnityEngine.MonoBehaviour {
 		if (time - _lastAttackTime >= 10000000 / attacksPerSecond) {
 			Console.WriteLine(time);
 			_lastAttackTime = time;
-//			Enemy enemy = GetClosestEnemy(enemies);
-			Attack(_enemy);
+			Enemy enemy = _enemy; //GetClosestEnemy(enemies); TODO
+			if ((position - enemy.position).sqrMagnitude <= _rangeSqr) {
+				Attack(enemy);
+			}
 		}
 	}
 
