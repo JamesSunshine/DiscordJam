@@ -18,10 +18,10 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 direction;
-    private GameObject player;
+    private GameObject target;
 
     private enum FlightMode {
-        Circle, DiveBomb
+        Circle, DiveBomb, Fixated
     };
 
     private FlightMode flightMode;
@@ -34,30 +34,69 @@ public class Enemy : MonoBehaviour
         rb.AddForce(direction * speed);
 
         flightMode = FlightMode.Circle;
-        player = GameObject.Find("Player");
+        target = FindClosestEnemy();
+        
+        InvokeRepeating(nameof(ChanceChangeToDiveBomb), 5.0f, 1f);
+        InvokeRepeating(nameof(ChangeTarget), 0.0f, 5.0f);
+    }
+
+    private void ChangeTarget()
+    {
+        target = FindClosestEnemy();
+    }
+    
+    public GameObject FindClosestEnemy()
+    {
+        GameObject[] gos;
+        gos = GameObject.FindGameObjectsWithTag("candle");
+        GameObject closest = null;
+        float distance = Mathf.Infinity;
+        Vector3 position = transform.position;
+        foreach (GameObject go in gos)
+        {
+            Vector3 diff = go.transform.position - position;
+            float curDistance = diff.sqrMagnitude;
+            if (curDistance < distance)
+            {
+                closest = go;
+                distance = curDistance;
+            }
+        }
+        return closest;
+    }
+
+    void ChanceChangeToDiveBomb()
+    {
+        if (flightMode != FlightMode.Circle)
+            return;
+        
+        if (Random.Range(0.0f, 1.0f) < chanceDiveBomb)
+        {
+            flightMode = FlightMode.DiveBomb;
+        }
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-
         Vector2 correctionForce;
         
         if (flightMode == FlightMode.Circle)
         {
-            float dt = 1f / 30f;
-            
-            // Chance to switch to divebomb mode
-            if (Random.Range(0.0f, 1.0f) < chanceDiveBomb * dt)
-            {
-                flightMode = FlightMode.DiveBomb;
-            }
-
-            correctionForce = RelativePitchToTarget(player.transform.position, 37f);
+            correctionForce = RelativePitchToTarget(target.transform.position, 37f);
         }
-        else
+        else if (flightMode == FlightMode.DiveBomb)
         {
-            correctionForce = RelativePitchToTarget(player.transform.position, 0f);
+            correctionForce = RelativePitchToTarget(target.transform.position, 0f);
+            if (correctionForce == Vector2.zero)
+            {
+                flightMode = FlightMode.Fixated;
+            }
+        }
+        else 
+        {
+            correctionForce = Vector2.zero;
+            print("doing nothing...");
         }
         
         rb.AddForce(correctionForce);
@@ -87,47 +126,6 @@ public class Enemy : MonoBehaviour
         return new Vector2(pos.x, pos.y);
     }
 
-    Vector2 CircleFlightCorrectionForce(Vector2 target)
-    {
-
-
-        return RelativePitchToTarget(target, 37f);
-//        
-//        Vector2 turnForce = Vector2.Perpendicular(rb.velocity) / rb.mass;
-//        
-//        float angleToTarget = Vector2.Angle(rb.velocity, target - getPosition());
-//        
-//        if (angleToTarget > 180) {
-//            if (angleToTarget > (360 - 37))
-//            {
-//                return turnForce * -1;
-//            }
-//        }
-//        else if (angleToTarget > 37)
-//        {
-//            return turnForce;
-//        }
-//        return Vector2.zero;
-    }
-
-    Vector2 DiveBombCorrectionForce(Vector2 target)
-    {
-        Vector2 turnForce = (target - getPosition()) * 5;
-        float angleToTarget = Vector2.Angle(rb.velocity, target - getPosition());
-
-        if (angleToTarget > 180)
-        {
-            if (angleToTarget > 359)
-            {
-                return turnForce * -1;
-            }
-        } else if (angleToTarget > 1)
-        {
-            return turnForce;
-        }
-        return Vector2.zero;
-    }
-
     Vector2 RelativePitchToTarget(Vector2 target, float pitchDegrees, float deadRange = 5)
     {
         Vector2 turnForce = Vector2.Perpendicular(rb.velocity) / rb.mass;
@@ -141,7 +139,7 @@ public class Enemy : MonoBehaviour
             direction = -1;
         }
 
-        if (pitchDegrees - deadRange < angleToTarget || angleToTarget < pitchDegrees + deadRange)
+        if (pitchDegrees + deadRange < angleToTarget || angleToTarget < pitchDegrees - deadRange)
         {
             return turnForce * direction;
         }
