@@ -16,11 +16,11 @@ public class Enemy : MonoBehaviour {
 	private Vector2 direction;
 	private GameObject player;
 
-    private enum FlightMode {
-        Circle, DiveBomb
-    };
+	private enum FlightMode {
+		Circle, DiveBomb
+	};
 
-    private FlightMode flightMode;
+	private FlightMode flightMode;
 
 	// Start is called before the first frame update
 	void Start() {
@@ -29,29 +29,28 @@ public class Enemy : MonoBehaviour {
 		direction = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
 		rb.AddForce(direction * speed);
 
-        flightMode = FlightMode.Circle;
-        player = GameObject.Find("Gem");
-    }
+		flightMode = FlightMode.Circle;
+		player = GameObject.Find("Gem");
+	}
 
-    // Update is called once per frame
-    void FixedUpdate() {
-        if (flightMode == FlightMode.Circle) {
-            // Chance to switch to divebomb mode
-            if (Random.Range(0.0f, 1.0f) < 0.05) {
-                flightMode = FlightMode.DiveBomb;
-            }
-            
-            UpdateFlightPitch();
-        } else {
-            UpdateFlightPitch();
-            //UpdateDiveBombPitch();
-        }
-    }
+	// Update is called once per frame
+	void FixedUpdate() {
+		if (flightMode == FlightMode.Circle) {
+			// Chance to switch to divebomb mode
+			if (Random.Range(0.0f, 1.0f) < 0.05) {
+				flightMode = FlightMode.DiveBomb;
+			}
+			
+			UpdateFlightPitch();
+		} else {
+			UpdateFlightPitch();
+			//UpdateDiveBombPitch();
+		}
+	}
 
-
-    void UpdateDiveBombPitch() {
-        
-    }
+	void UpdateDiveBombPitch() {
+		
+	}
 
 	void OnCollisionEnter(Collision collision) {
 		if (collision.gameObject.CompareTag("projectile")) {
@@ -73,13 +72,13 @@ public class Enemy : MonoBehaviour {
 	}
 
 	public Vector2 GetFuturePosition() {
-		return position + speed * direction / 0.1f;
+		return position + speed / 0.0001f * direction;
 	}
 
 	Vector2 FlightCorrectionForce(Vector2 target) {
 		Vector2 turnForce = Vector2.Perpendicular(rb.velocity) / rb.mass;
 		float angleToTarget = Vector2.Angle(rb.velocity, target - getPosition());
-		
+
 		if (angleToTarget > 180) {
 			if (angleToTarget > (180 - 37))
 			{

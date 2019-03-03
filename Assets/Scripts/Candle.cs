@@ -12,6 +12,7 @@ public class Candle : UnityEngine.MonoBehaviour {
 	public GameObject[] gameObjects;
 	private GameObject projectile => gameObjects[0];
 	public Vector2 position => transform.position;
+	public GameObject DeadMoth;
 
 	private long _lastAttackTime = 0;
 	private Enemy _enemy;
@@ -21,6 +22,18 @@ public class Candle : UnityEngine.MonoBehaviour {
 	void Start() {
 		_enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
 		_rangeSqr = range * range;
+	}
+
+	private void OnTriggerEnter2D(Collider2D other) {
+		if (!other.CompareTag("enemy")) return;
+
+		health -= 1;
+		if (health <= 0) {
+			Destroy(gameObject);
+			// TODO dead candle animation
+		}
+		Destroy(other.gameObject);
+		Instantiate(DeadMoth, position, Quaternion.identity);
 	}
 
 	// Update is called once per frame
@@ -39,14 +52,11 @@ public class Candle : UnityEngine.MonoBehaviour {
 	void Attack(Enemy enemy) {
 		var startingPosition = position + new Vector2(0, 1.7f);
 		Instantiate(projectile, startingPosition, Quaternion.identity)
-			.GetComponent<Projectile>().direction = (enemy.position - startingPosition).normalized;
+			.GetComponent<Projectile>().direction = (enemy.GetFuturePosition() - startingPosition).normalized;
 	}
 
 	void OnHit(Enemy enemy) {
-		health -= 1; //enemy.damage
-		if (health <= 0) {
-			Destroy(this);
-		}
+		
 	}
 	
 	Enemy GetClosestEnemy(Enemy[] enemies) {
