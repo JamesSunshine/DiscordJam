@@ -41,6 +41,8 @@ public class Enemy : MonoBehaviour {
     {
         Vector2 correctionForce = FlightCorrectionForce(player.transform.position);
         rb.AddForce(correctionForce);
+
+        rb.velocity = rb.velocity.normalized * speed;
     }
 
     Vector2 getPosition()
