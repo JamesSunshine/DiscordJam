@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Experimental.PlayerLoop;
 using Vector2 = UnityEngine.Vector2;
 
 
@@ -12,6 +14,7 @@ public class Enemy : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 direction;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start() {
@@ -19,17 +22,42 @@ public class Enemy : MonoBehaviour
 
         direction = new Vector2(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f)).normalized;
         rb.AddForce(direction * speed);
+
+        player = GameObject.Find("Player");
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        Candle closestCandle = new Candle();
+    void FixedUpdate() {
+        UpdateFlightPitch();
+    }
 
-        if (Vector2.Angle(direction, closestCandle.position) > 36) {
-            // pitch up
+    void UpdateFlightPitch()
+    {
+        Vector2 correctionForce = FlightCorrectionForce(player.transform.position);
+        rb.AddForce(correctionForce);
+    }
+
+    Vector2 getPosition()
+    {
+        Vector3 pos = transform.position;
+        return new Vector2(pos.x, pos.y);
+    }
+
+
+    Vector2 FlightCorrectionForce(Vector2 target) {
+        Vector2 turnForce = Vector2.Perpendicular(rb.velocity) / rb.mass;
+        float angleToTarget = Vector2.Angle(rb.velocity, target - getPosition());
+        
+        if (angleToTarget > 180) {
+            if (angleToTarget > (180 - 37))
+            {
+                return turnForce * -1;
+            }
         }
-        
-        
+        else if (angleToTarget > 37)
+        {
+            return turnForce;
+        }
+        return Vector2.zero;
     }
 }
