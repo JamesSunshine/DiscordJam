@@ -11,8 +11,7 @@ public class PlayerCharacter : MonoBehaviour {
     private GameObject candleLight => gameObjects[1];
     public Vector2 position => transform.position;
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         Vector2 velocity = Vector2.zero;
 
         if (Input.GetKey(KeyCode.W)) {
@@ -31,10 +30,8 @@ public class PlayerCharacter : MonoBehaviour {
         transform.Translate(velocity.normalized * speed * Time.deltaTime);
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
+    void Update() {
+        if (Input.GetKeyDown(KeyCode.E)) {
             Vector3 position = transform.position;
             Instantiate(candle, position, Quaternion.identity);
         }

@@ -146,12 +146,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ba1eb54b3ef6924498953e825689b60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  range: 10
+  range: 7
   damage: 1
   attacksPerSecond: 2
-  health: 10
+  health: 1
   gameObjects:
   - {fileID: 6524859188517275150, guid: 53ad5acbaed69d542acac1ed615676b5, type: 3}
+  - {fileID: 8704463033486140180, guid: a6b95cc053ddadc409b7bb7a53275095, type: 3}
+  DeadMoth: {fileID: 1981192814289017310, guid: fb9b50ea483788c429e33024671fea6e,
+    type: 3}
+  anim: {fileID: 0}
 --- !u!95 &1249719954878007295
 Animator:
   serializedVersion: 3
