@@ -192,7 +192,7 @@ PrefabInstance:
     - target: {fileID: 6917139465605330680, guid: 2ff00866ec1c8284581f3ab6938c9360,
         type: 3}
       propertyPath: attacksPerSecond
-      value: 1.9
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ff00866ec1c8284581f3ab6938c9360, type: 3}
