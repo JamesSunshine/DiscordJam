@@ -33,7 +33,7 @@ public class Candle : UnityEngine.MonoBehaviour {
 	}
 
 	void Attack(Enemy enemy) {
-		var startingPosition = position + new Vector2(0, 1.5f);
+		var startingPosition = position + new Vector2(0, 1.7f);
 		Instantiate(projectile, startingPosition, Quaternion.identity)
 			.GetComponent<Projectile>().direction = (enemy.position - startingPosition).normalized;
 	}

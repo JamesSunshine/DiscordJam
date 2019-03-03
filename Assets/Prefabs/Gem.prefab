@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7962352452854222890}
   - component: {fileID: 7962352452854222889}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -79,7 +79,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7962352453104478181}
   - component: {fileID: 7962352453104478182}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Gem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
